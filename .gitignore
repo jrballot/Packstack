@@ -1,0 +1,11 @@
+.vagrant/
+*.pem
+*.key
+*.pub
+id_rsa*
+id_dsa*
+*.pdf
+**/.terraform/
+*.log
+*.qcow2
+**/.venv/

@@ -1,0 +1,47 @@
+---
+- hosts: packstack
+  become: yes
+  become_method: sudo
+  gather_facts: true
+
+  tasks:
+  - name: "[Prerequisites] Disable firewalld and NetworkManager."
+    service: name={{item}} state=stopped enabled=no  
+    with_items:
+      - "firewalld"
+      - "NetworkManager"  
+  
+  - name: "[Prerequisites] Disable SELinux"
+    selinux:
+      policy: targeted
+      state: permissive
+ 
+  - name: "Install repositorie packages for OpenStack Train"
+    package:
+      name: "{{item}}"
+      state: present
+    with_items:
+      - "https://rdoproject.org/repos/rdo-release.rpm"
+      - "centos-release-openstack-rocky"
+      - "vim"
+    register: result
+
+  - name: "Garantee OpenStack train repo enabled"
+    command: yum-config-manager --enable openstack-rocky
+    when: result is success
+    register: result
+
+  - name: "Updating packages"
+    command: yum update -y
+    when: result is success
+  
+  - name: "Installling OpenStack-Packstack package"
+    package: name=openstack-packstack state=present
+    when: result is  success
+
+  - name: "Installing packstack with --answer-file option"
+    command: packstack --answer-file /vagrant/packstack-answers.txt
+    when: result is success
+               
+               
+               
