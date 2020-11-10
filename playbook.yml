@@ -5,42 +5,59 @@
   gather_facts: true
 
   tasks:
-  - name: "[Prerequisites] Disable firewalld and NetworkManager."
+  - name: "Disable firewalld and NetworkManager."
     service: name={{item}} state=stopped enabled=no  
     with_items:
       - "firewalld"
       - "NetworkManager"  
-  
-  - name: "[Prerequisites] Disable SELinux"
+ 
+  - name: "Disable SELinux"
     selinux:
       policy: targeted
       state: permissive
+  
+  - name: "Installing Network-scripts"
+    dnf:
+      name: "network-scripts"
+      state: present
+
+  - name: "Enabling Network"
+    systemd:
+      name: network
+      enabled: yes
+  
+  - name: "Garantee PowerTools repository enabled"
+    command: dnf config-manager --enable PowerTools
+  
+  - name: "Garantee EPEL repository disabled"
+    command: dnf config-manager --disable epel epel-modular
  
-  - name: "Install repositorie packages for OpenStack Train"
+  - name: "Install repository packages for OpenStack"
     package:
       name: "{{item}}"
       state: present
     with_items:
-      - "https://rdoproject.org/repos/rdo-release.rpm"
-      - "centos-release-openstack-rocky"
+      - "centos-release-openstack-train"
       - "vim"
     register: result
 
-  - name: "Garantee OpenStack train repo enabled"
-    command: yum-config-manager --enable openstack-rocky
-    when: result is success
-    register: result
-
   - name: "Updating packages"
-    command: yum update -y
+    command: dnf update -y --exclude=kernel*
     when: result is success
   
   - name: "Installling OpenStack-Packstack package"
-    package: name=openstack-packstack state=present
+    dnf: 
+      name: openstack-packstack
+      state: present
     when: result is  success
 
+  - name: "Copying PackStack Answers file"
+    copy:
+      src: "{{playbook_dir}}/packstack-answers.txt"
+      dest: /tmp/packstack-answers.txt
+
   - name: "Installing packstack with --answer-file option"
-    command: packstack --answer-file /vagrant/packstack-answers.txt
+    command: packstack --answer-file /tmp/packstack-answers.txt
     when: result is success
                
                

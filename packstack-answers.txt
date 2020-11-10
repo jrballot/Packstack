@@ -8,7 +8,7 @@ CONFIG_SSH_KEY=/root/.ssh/id_rsa.pub
 
 # Default password to be used everywhere (overridden by passwords set
 # for individual services or users).
-CONFIG_DEFAULT_PASSWORD=
+CONFIG_DEFAULT_PASSWORD=qwe123qwe
 
 # The amount of service workers/threads to use for each service.
 # Useful to tweak when you have memory constraints. Defaults to the
@@ -39,7 +39,7 @@ CONFIG_NEUTRON_INSTALL=y
 CONFIG_HORIZON_INSTALL=y
 
 # Specify 'y' to install OpenStack Object Storage (swift). ['y', 'n']
-CONFIG_SWIFT_INSTALL=n
+CONFIG_SWIFT_INSTALL=y
 
 # Specify 'y' to install OpenStack Metering (ceilometer). Note this
 # will also automatically install gnocchi service and configures it as
@@ -62,7 +62,7 @@ CONFIG_HEAT_INSTALL=y
 
 # Specify 'y' to install OpenStack Container Infrastructure
 # Management Service (magnum). ['y', 'n']
-CONFIG_MAGNUM_INSTALL=y
+CONFIG_MAGNUM_INSTALL=n
 
 # Specify 'y' to install OpenStack Database (trove) ['y', 'n']
 CONFIG_TROVE_INSTALL=n
@@ -92,14 +92,14 @@ CONFIG_DEBUG_MODE=n
 
 # Server on which to install OpenStack services specific to the
 # controller role (for example, API servers or dashboard).
-CONFIG_CONTROLLER_HOST=192.168.255.10
+CONFIG_CONTROLLER_HOST=10.0.2.15
 
 # List the servers on which to install the Compute service.
-CONFIG_COMPUTE_HOSTS=192.168.255.10
+CONFIG_COMPUTE_HOSTS=10.0.2.15
 
 # List of servers on which to install the network service such as
 # Compute networking (nova network) or OpenStack Networking (neutron).
-CONFIG_NETWORK_HOSTS=192.168.255.10
+CONFIG_NETWORK_HOSTS=10.0.2.15
 
 # Specify 'y' if you want to use VMware vCenter as hypervisor and
 # storage; otherwise, specify 'n'. ['y', 'n']
@@ -135,11 +135,11 @@ CONFIG_VCENTER_CLUSTER_NAMES=
 
 # (Unsupported!) Server on which to install OpenStack services
 # specific to storage servers such as Image or Block Storage services.
-CONFIG_STORAGE_HOST=192.168.255.10
+CONFIG_STORAGE_HOST=10.0.2.15
 
 # (Unsupported!) Server on which to install OpenStack services
 # specific to OpenStack Data Processing (sahara).
-CONFIG_SAHARA_HOST=192.168.255.10
+CONFIG_SAHARA_HOST=10.0.2.15
 
 # Comma-separated list of URLs for any additional yum repositories,
 # to use for installation.
@@ -272,7 +272,7 @@ CONFIG_SSL_CERT_SUBJECT_MAIL=admin@packstack.dexter.com.br
 CONFIG_AMQP_BACKEND=rabbitmq
 
 # IP address of the server on which to install the AMQP service.
-CONFIG_AMQP_HOST=192.168.255.10
+CONFIG_AMQP_HOST=10.0.2.15
 
 # Specify 'y' to enable SSL for the AMQP service. ['y', 'n']
 CONFIG_AMQP_ENABLE_SSL=n
@@ -294,7 +294,7 @@ CONFIG_AMQP_AUTH_PASSWORD=PW_PLACEHOLDER
 # installation was not specified in CONFIG_MARIADB_INSTALL, specify
 # the IP address of an existing database server (a MariaDB cluster can
 # also be specified).
-CONFIG_MARIADB_HOST=192.168.255.10
+CONFIG_MARIADB_HOST=10.0.2.15
 
 # User name for the MariaDB administrative user.
 CONFIG_MARIADB_USER=root
@@ -856,7 +856,7 @@ CONFIG_NEUTRON_LB_INTERFACE_MAPPINGS=
 # Networking Open vSwitch plugin. Each tuple in the list must be in
 # the format <physical_network>:<ovs_bridge>. Example: physnet1:br-
 # eth1,physnet2:br-eth2,physnet3:br-eth3
-CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=extnet:br-ex
+CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=eth1:br-ex
 
 # Comma-separated list of colon-separated Open vSwitch
 # <bridge>:<interface> pairs. The interface will be added to the
@@ -885,7 +885,7 @@ CONFIG_NEUTRON_OVS_BRIDGES_COMPUTE=
 # bridge-mappings="extnet:br-ex,physnet1:br-vlan" --os-neutron-ovs-
 # bridge-interfaces="br-ex:eth1,br-vlan:eth2" --os-neutron-ovs-
 # external-physnet="extnet"
-CONFIG_NEUTRON_OVS_EXTERNAL_PHYSNET=extnet
+CONFIG_NEUTRON_OVS_EXTERNAL_PHYSNET=eth1
 
 # Interface for the Open vSwitch tunnel. Packstack overrides the IP
 # address used for tunnels on this hypervisor to the IP found on the
@@ -908,7 +908,7 @@ CONFIG_NEUTRON_OVS_VXLAN_UDP_PORT=4789
 # Networking Open Virtual Network plugin. Each tuple in the list must
 # be in the format <physical_network>:<ovs_bridge>. Example: physnet1
 # :br-eth1,physnet2:br-eth2,physnet3:br-eth3
-CONFIG_NEUTRON_OVN_BRIDGE_MAPPINGS=extnet:br-ex
+CONFIG_NEUTRON_OVN_BRIDGE_MAPPINGS=eth1:br-ex
 
 # Comma-separated list of colon-separated Open vSwitch
 # <bridge>:<interface> pairs. The interface will be added to the
@@ -937,7 +937,7 @@ CONFIG_NEUTRON_OVN_BRIDGES_COMPUTE=
 # bridge-mappings="extnet:br-ex,physnet1:br-vlan" --os-neutron-ovn-
 # bridge-interfaces="br-ex:eth1,br-vlan:eth2" --os-neutron-ovn-
 # external-physnet="extnet"
-CONFIG_NEUTRON_OVN_EXTERNAL_PHYSNET=extnet
+CONFIG_NEUTRON_OVN_EXTERNAL_PHYSNET=eth1
 
 # Interface for the Open vSwitch tunnel. Packstack overrides the IP
 # address used for tunnels on this hypervisor to the IP found on the
@@ -1187,7 +1187,7 @@ CONFIG_PROVISION_DEMO=y
 CONFIG_PROVISION_TEMPEST=n
 
 # CIDR network address for the floating IP subnet.
-CONFIG_PROVISION_DEMO_FLOATRANGE=172.24.4.0/24
+CONFIG_PROVISION_DEMO_FLOATRANGE=172.16.20.0/24
 
 # Allocation pools in the floating IP subnet.
 CONFIG_PROVISION_DEMO_ALLOCATION_POOLS=[]
@@ -1236,7 +1236,7 @@ CONFIG_PROVISION_TEMPEST_USER=
 CONFIG_PROVISION_TEMPEST_USER_PW=PW_PLACEHOLDER
 
 # CIDR network address for the floating IP subnet.
-CONFIG_PROVISION_TEMPEST_FLOATRANGE=172.24.4.0/24
+CONFIG_PROVISION_TEMPEST_FLOATRANGE=172.16.20.0/24
 
 # Primary flavor name to use in Tempest.
 CONFIG_PROVISION_TEMPEST_FLAVOR_NAME=m1.nano
@@ -1300,7 +1300,7 @@ CONFIG_CEILOMETER_COORDINATION_BACKEND=redis
 CONFIG_ENABLE_CEILOMETER_MIDDLEWARE=n
 
 # IP address of the server on which to install the Redis server.
-CONFIG_REDIS_HOST=192.168.255.10
+CONFIG_REDIS_HOST=10.0.2.15
 
 # Port on which the Redis server listens.
 CONFIG_REDIS_PORT=6379
